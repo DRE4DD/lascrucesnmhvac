@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://lascrucesnmhvac.com/sitemap.xml
+
+# Crawl-delay (optional, helps prevent server overload)
+Crawl-delay: 1
+google-site-verification=5ibl77u6OKksgi4TehIT6E7moVgT9YMXcrBuh5GFkII

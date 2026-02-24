@@ -1,0 +1,291 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Las Cruces HVAC Cost Calculator | Free Tool & Local Contractors</title>
+    <meta name="description" content="Learn about our free HVAC cost calculator serving Las Cruces and Doña Ana County. We connect homeowners with licensed local contractors for accurate quotes.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .about-page {
+            padding-top: 100px;
+            min-height: 100vh;
+        }
+
+        .about-hero {
+            background: var(--neutral-gradient);
+            color: white;
+            padding: 100px 24px;
+            text-align: center;
+        }
+
+        .about-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 24px;
+        }
+
+        .about-hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.95;
+        }
+
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 80px 24px;
+        }
+
+        .about-content h2 {
+            font-size: 2.25rem;
+            color: var(--dark);
+            margin-bottom: 24px;
+            margin-top: 60px;
+        }
+
+        .about-content h2:first-of-type {
+            margin-top: 0;
+        }
+
+        .about-content p {
+            color: var(--metal-gray);
+            line-height: 1.9;
+            font-size: 1.15rem;
+            margin-bottom: 20px;
+        }
+
+        .about-content ul {
+            margin: 24px 0;
+            padding-left: 0;
+            list-style: none;
+        }
+
+        .about-content ul li {
+            padding: 12px 0 12px 32px;
+            position: relative;
+            color: var(--steel-dark);
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        .about-content ul li:before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--cool-blue);
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin: 60px 0;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 30px;
+            background: var(--light-gray);
+            border-radius: 16px;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--cool-blue);
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            color: var(--metal-gray);
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .about-hero h1 {
+                font-size: 2.25rem;
+            }
+
+            .about-hero p {
+                font-size: 1.1rem;
+            }
+
+            .about-content h2 {
+                font-size: 1.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <svg width="50" height="50" viewBox="0 0 50 50" class="zia-icon">
+                    <circle cx="25" cy="25" r="8" fill="currentColor"/>
+                    <line x1="25" y1="5" x2="25" y2="17" stroke="currentColor" stroke-width="2.5"/>
+                    <line x1="25" y1="33" x2="25" y2="45" stroke="currentColor" stroke-width="2.5"/>
+                    <line x1="5" y1="25" x2="17" y2="25" stroke="currentColor" stroke-width="2.5"/>
+                    <line x1="33" y1="25" x2="45" y2="25" stroke="currentColor" stroke-width="2.5"/>
+                    <line x1="12" y1="12" x2="19" y2="19" stroke="currentColor" stroke-width="2"/>
+                    <line x1="31" y1="31" x2="38" y2="38" stroke="currentColor" stroke-width="2"/>
+                    <line x1="38" y1="12" x2="31" y2="19" stroke="currentColor" stroke-width="2"/>
+                    <line x1="19" y1="31" x2="12" y2="38" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                <span class="logo-text">Las Cruces HVAC</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="services.html">Services ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="services.html#ac-repair">AC Repair</a></li>
+                        <li><a href="services.html#furnace-repair">Furnace Repair</a></li>
+                        <li><a href="services.html#maintenance">Maintenance</a></li>
+                    </ul>
+                </li>
+                <li><a href="calculator.html">Calculator</a></li>
+                <li><a href="about.html" class="active">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="mobile-menu-toggle">☰</div>
+        </div>
+    </nav>
+
+    <div class="about-page">
+        <div class="about-hero fade-in">
+            <h1>About Las Cruces HVAC Cost Calculator</h1>
+            <p>We're dedicated to helping Southern New Mexico homeowners make informed HVAC decisions by providing accurate cost estimates and connecting them with trusted local contractors.</p>
+        </div>
+
+        <div class="about-content">
+            <div class="fade-in">
+                <h2>Our Mission</h2>
+                <p>We created the Las Cruces HVAC Cost Calculator because we saw homeowners struggling with a common problem: getting accurate HVAC pricing without committing to sales appointments. We wanted to give Las Cruces residents a free, easy tool to understand what they should expect to pay before talking to contractors.</p>
+
+                <p>Our calculator uses industry-standard Manual J methodology, specifically calibrated for Southern New Mexico's unique desert climate. We understand the challenges of 100°F+ summers and the importance of properly sized cooling systems in our region.</p>
+            </div>
+
+            <div class="stats-grid fade-in">
+                <div class="stat-box">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Free to Use</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">30sec</div>
+                    <div class="stat-label">Get Results</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">2-3</div>
+                    <div class="stat-label">Contractor Quotes</div>
+                </div>
+            </div>
+
+            <div class="fade-in">
+                <h2>Why We're Different</h2>
+                <ul>
+                    <li><strong>Desert Climate Focused:</strong> Our calculations account for Las Cruces' extreme summer heat (regularly 95-105°F) and high cooling hours, unlike generic calculators.</li>
+                    <li><strong>No Sales Pressure:</strong> Use our calculator anytime without giving your information. Only submit your details when you're ready for contractor quotes.</li>
+                    <li><strong>Licensed Local Contractors:</strong> We only connect you with licensed, insured HVAC professionals serving Doña Ana County.</li>
+                    <li><strong>Education First:</strong> We provide detailed information about system sizing, efficiency ratings, and what to expect - helping you make informed decisions.</li>
+                    <li><strong>Completely Free:</strong> No hidden fees, no obligations. Our service is 100% free for homeowners.</li>
+                </ul>
+            </div>
+
+            <div class="fade-in">
+                <h2>How It Works</h2>
+                <p>Our process is simple and transparent:</p>
+
+                <ol style="padding-left: 20px; color: var(--metal-gray); line-height: 1.9;">
+                    <li style="margin-bottom: 16px;"><strong>Use the Calculator:</strong> Answer 4 quick questions about your home - square footage, insulation quality, climate conditions, and current system age.</li>
+                    <li style="margin-bottom: 16px;"><strong>Get Instant Results:</strong> See your recommended system size in BTUs and tons, plus an estimated installation cost range based on Las Cruces pricing.</li>
+                    <li style="margin-bottom: 16px;"><strong>Optional: Connect with Contractors:</strong> If you want quotes, submit your contact information and we'll connect you with 2-3 licensed local HVAC professionals.</li>
+                    <li style="margin-bottom: 16px;"><strong>Compare Quotes:</strong> Contractors reach out within 24-48 hours to schedule free in-home assessments and provide detailed quotes.</li>
+                </ol>
+            </div>
+
+            <div class="fade-in">
+                <h2>Understanding Las Cruces HVAC Needs</h2>
+                <p>Las Cruces presents unique HVAC challenges that generic calculators don't address:</p>
+
+                <ul>
+                    <li><strong>Extreme Summer Heat:</strong> With temperatures regularly exceeding 95°F from May through September, cooling capacity is critical. Undersized systems will run constantly and still fail to keep homes comfortable.</li>
+                    <li><strong>High Cooling Hours:</strong> Las Cruces averages over 2,000 cooling hours annually - more than double many other regions. This makes efficiency ratings (SEER) especially important for energy savings.</li>
+                    <li><strong>Desert Dust:</strong> Our dusty environment requires more frequent filter changes and coil cleaning than humid climates.</li>
+                    <li><strong>Temperature Swings:</strong> Daily temperature variations of 30-40°F put stress on HVAC equipment, making proper maintenance essential.</li>
+                </ul>
+            </div>
+
+            <div class="fade-in">
+                <h2>Our Commitment to You</h2>
+                <p>We're committed to providing Las Cruces homeowners with accurate, helpful information to make the best HVAC decisions for their homes and budgets. Whether you use our calculator for planning purposes or to connect with contractors, we're here to help you navigate the process with confidence.</p>
+
+                <p>If you have questions or feedback about our calculator, please don't hesitate to reach out through our contact page.</p>
+            </div>
+        </div>
+
+        <section class="cta-section fade-in">
+            <div class="container">
+                <div class="cta-content">
+                    <h2>Ready to Calculate Your HVAC Cost?</h2>
+                    <p>Get instant, accurate estimates in just 30 seconds</p>
+                    <a href="calculator.html" class="cta-button primary large">Start Free Calculator</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <svg width="40" height="40" viewBox="0 0 50 50" class="zia-icon">
+                            <circle cx="25" cy="25" r="8" fill="currentColor"/>
+                            <line x1="25" y1="5" x2="25" y2="17" stroke="currentColor" stroke-width="2.5"/>
+                            <line x1="25" y1="33" x2="25" y2="45" stroke="currentColor" stroke-width="2.5"/>
+                            <line x1="5" y1="25" x2="17" y2="25" stroke="currentColor" stroke-width="2.5"/>
+                            <line x1="33" y1="25" x2="45" y2="25" stroke="currentColor" stroke-width="2.5"/>
+                            <line x1="12" y1="12" x2="19" y2="19" stroke="currentColor" stroke-width="2"/>
+                            <line x1="31" y1="31" x2="38" y2="38" stroke="currentColor" stroke-width="2"/>
+                            <line x1="38" y1="12" x2="31" y2="19" stroke="currentColor" stroke-width="2"/>
+                            <line x1="19" y1="31" x2="12" y2="38" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        <span>Las Cruces HVAC</span>
+                    </div>
+                    <p>Southern New Mexico's most accurate HVAC cost calculator and contractor connection service.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="calculator.html">Calculator</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Service Areas</h4>
+                    <ul>
+                        <li>Las Cruces, NM</li>
+                        <li>Mesilla, NM</li>
+                        <li>White Sands, NM</li>
+                        <li>Organ, NM</li>
+                        <li>Doña Ana County</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Las Cruces HVAC Cost Calculator. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
