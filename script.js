@@ -1,138 +1,183 @@
-// Scroll Animation Observer
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -100px 0px'
-};
+/* ===========================
+   Las Cruces HVAC — Main JS
+   =========================== */
 
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-        }
-    });
-}, observerOptions);
-
-// Observe all fade-in elements
 document.addEventListener('DOMContentLoaded', () => {
-    const fadeElements = document.querySelectorAll('.fade-in');
-    fadeElements.forEach((el, index) => {
-        el.classList.add('fade-in-scroll');
-        el.style.transitionDelay = `${index * 0.1}s`;
-        observer.observe(el);
+
+  /* --- Mobile nav toggle --- */
+  const toggle = document.querySelector('.mobile-toggle');
+  const navMenu = document.querySelector('.nav-menu');
+
+  if (toggle && navMenu) {
+    toggle.addEventListener('click', () => {
+      navMenu.classList.toggle('open');
+      toggle.textContent = navMenu.classList.contains('open') ? '✕' : '☰';
     });
 
-    // Mobile menu toggle
-    const mobileToggle = document.querySelector('.mobile-menu-toggle');
-    const navMenu = document.querySelector('.nav-menu');
-    
-    if (mobileToggle) {
-        mobileToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-        });
-    }
-
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
+    // Close on outside click
+    document.addEventListener('click', (e) => {
+      if (!toggle.contains(e.target) && !navMenu.contains(e.target)) {
+        navMenu.classList.remove('open');
+        toggle.textContent = '☰';
+      }
     });
+  }
 
-    // Navbar scroll effect
-    let lastScroll = 0;
-    const navbar = document.querySelector('.navbar');
-    
+  /* --- Navbar scroll shadow --- */
+  const navbar = document.querySelector('.navbar');
+  if (navbar) {
     window.addEventListener('scroll', () => {
-        const currentScroll = window.pageYOffset;
-        
-        if (currentScroll > 100) {
-            navbar.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.15)';
-        } else {
-            navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+  }
+
+  /* --- Scroll fade-up animations --- */
+  const fadeEls = document.querySelectorAll('.fade-up');
+  if (fadeEls.length) {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          obs.unobserve(entry.target);
         }
-        
-        lastScroll = currentScroll;
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+    fadeEls.forEach((el, i) => {
+      el.style.transitionDelay = `${i * 0.07}s`;
+      obs.observe(el);
     });
+  }
+
+  /* --- FAQ accordion --- */
+  document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+
+      // Close all
+      document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+
+      // Toggle clicked
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+
 });
 
-// Calculator Logic (for calculator.html page)
+/* ===========================
+   HVAC CALCULATOR
+   =========================== */
+
 function calculateHVAC() {
-    const squareFootage = parseInt(document.getElementById('squareFootage')?.value);
-    const insulation = document.querySelector('input[name="insulation"]:checked')?.value;
-    const climate = document.querySelector('input[name="climate"]:checked')?.value;
-    const systemAge = document.querySelector('input[name="systemAge"]:checked')?.value;
+  const sqftInput = document.getElementById('squareFootage');
+  const insulationInput = document.querySelector('input[name="insulation"]:checked');
+  const floorInput = document.querySelector('input[name="floors"]:checked');
 
-    if (!squareFootage || !insulation || !climate || !systemAge) {
-        alert('Please answer all questions');
-        return;
-    }
+  if (!sqftInput || !insulationInput || !floorInput) {
+    alert('Please fill in all fields before calculating.');
+    return;
+  }
 
-    // Calculate BTU requirements based on square footage and conditions
-    let btuPerSqFt = 25; // Base BTU per square foot
+  const sqft = parseInt(sqftInput.value, 10);
 
-    // Adjust for insulation
-    if (insulation === 'poor') btuPerSqFt += 5;
-    if (insulation === 'excellent') btuPerSqFt -= 3;
+  if (!sqft || sqft < 100 || sqft > 20000) {
+    alert('Please enter a valid square footage between 100 and 20,000.');
+    sqftInput.focus();
+    return;
+  }
 
-    // Adjust for climate (Las Cruces is very hot)
-    if (climate === 'very-hot') btuPerSqFt += 8;
-    if (climate === 'moderate') btuPerSqFt += 3;
+  const insulation = insulationInput.value;
+  const floors = floorInput.value;
 
-    const totalBTU = squareFootage * btuPerSqFt;
-    const tons = (totalBTU / 12000).toFixed(1);
+  /* --- Sizing formula (BTU/hr) ---
+     Base: 25 BTU per sq ft (industry standard for hot desert climate)
+     Las Cruces design temp is ~104°F — we use a slightly elevated base.
+  */
+  let btuPerSqFt = 25;
 
-    // Calculate estimated cost
-    let baseCost = 4500;
-    const tonMultiplier = parseFloat(tons);
-    let estimatedCost = baseCost + (tonMultiplier * 800);
+  // Insulation adjustment
+  if (insulation === 'poor')      btuPerSqFt += 5;
+  else if (insulation === 'good') btuPerSqFt += 1;
+  // 'excellent' — no adjustment (well-insulated = baseline)
 
-    // Adjust for system age (replacement vs new installation)
-    if (systemAge === 'none' || systemAge === '15plus') {
-        estimatedCost += 500; // Additional cost for full installation or old system removal
-    }
+  // Multi-story adjustment (upper floors absorb more heat)
+  if (floors === 'two')  btuPerSqFt += 2;
+  if (floors === 'three') btuPerSqFt += 3;
 
-    // Display results
-    document.getElementById('btuResult').value = totalBTU.toLocaleString();
-    document.getElementById('tonsResult').value = tons;
-    document.getElementById('costResult').value = estimatedCost.toLocaleString();
+  const totalBTU = Math.round(sqft * btuPerSqFt);
+  const tons = (totalBTU / 12000).toFixed(1);
 
-    // Scroll to results
-    document.getElementById('results-section')?.scrollIntoView({ behavior: 'smooth' });
+  /* --- Cost estimation ---
+     National averages for central AC + installation in 2024:
+     - 2 ton:  $3,800 – $5,200
+     - 3 ton:  $4,400 – $6,200
+     - 4 ton:  $5,000 – $7,500
+     - 5 ton:  $5,800 – $8,800
+     Formula: base $3,400 + ($900/ton), range ±25%
+  */
+  const tonsNum = parseFloat(tons);
+  const midCost = Math.round(3400 + tonsNum * 900);
+  const lowCost = Math.round(midCost * 0.80 / 100) * 100;
+  const highCost = Math.round(midCost * 1.25 / 100) * 100;
+
+  // Populate results
+  document.getElementById('res-sqft').textContent = sqft.toLocaleString() + ' sq ft';
+  document.getElementById('res-btu').textContent = totalBTU.toLocaleString() + ' BTU/hr';
+  document.getElementById('res-tons').textContent = tonsNum + ' tons';
+  document.getElementById('res-cost').textContent =
+    '$' + lowCost.toLocaleString() + ' – $' + highCost.toLocaleString();
+
+  // Show results panel
+  const placeholder = document.getElementById('result-placeholder');
+  const display = document.getElementById('result-display');
+  if (placeholder) placeholder.style.display = 'none';
+  if (display) display.classList.add('visible');
+
+  // Scroll to results on mobile
+  if (window.innerWidth < 769) {
+    document.getElementById('result-display')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 }
 
-// Form submission handler
-function handleFormSubmit(event) {
-    event.preventDefault();
-    
-    const name = document.getElementById('customerName')?.value;
-    const email = document.getElementById('customerEmail')?.value;
-    const phone = document.getElementById('customerPhone')?.value;
-    const address = document.getElementById('customerAddress')?.value;
+/* ===========================
+   CONTACT FORM
+   =========================== */
 
-    if (!name || !email || !phone || !address) {
-        alert('Please fill in all contact information');
-        return;
-    }
+function handleContactForm(event) {
+  event.preventDefault();
 
-    // Here you would typically send this to a backend or email service
-    // For now, we'll just show a success message
-    alert('Thank you! We will connect you with 2-3 licensed HVAC contractors within 24-48 hours.');
-    
-    // You can integrate with services like:
-    // - Formspree
-    // - EmailJS
-    // - Your own backend API
-}
+  const form = event.target;
+  const btn = form.querySelector('button[type="submit"]');
 
-// Export functions for use in HTML
-if (typeof window !== 'undefined') {
-    window.calculateHVAC = calculateHVAC;
-    window.handleFormSubmit = handleFormSubmit;
+  // Basic validation
+  const name    = document.getElementById('contact-name')?.value?.trim();
+  const phone   = document.getElementById('contact-phone')?.value?.trim();
+  const email   = document.getElementById('contact-email')?.value?.trim();
+  const city    = document.getElementById('contact-city')?.value;
+  const service = document.getElementById('contact-service')?.value;
+
+  if (!name || !phone || !email || !city || !service) {
+    alert('Please fill in all required fields.');
+    return;
+  }
+
+  // Disable button while "sending"
+  if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+
+  /*
+   * EmailJS integration placeholder.
+   * To activate: include the EmailJS SDK, call emailjs.init('YOUR_PUBLIC_KEY')
+   * in a <script> tag, then replace the setTimeout below with:
+   *
+   *   emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', form)
+   *     .then(() => showSuccess(), () => showError());
+   */
+  setTimeout(() => {
+    // Show success state
+    const formEl = document.getElementById('contact-form-wrap');
+    const successEl = document.getElementById('form-success');
+    if (formEl) formEl.style.display = 'none';
+    if (successEl) successEl.classList.add('visible');
+  }, 800);
 }
